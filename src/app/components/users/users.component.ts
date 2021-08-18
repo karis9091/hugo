@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UsersService } from '../../services/users.service';
+import { UsuariosService } from '../../services/users.service';
 import { NgForm } from '@angular/forms';
 import { Users } from '../../models/users';
 
@@ -9,11 +9,11 @@ declare var CanvasJS: any;
   selector: 'app-users',
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.css'],
-  providers: [UsersService]
+  providers: [UsuariosService]
 })
 export class UsersComponent implements OnInit {
 
-  constructor(public userService: UsersService) {
+  constructor(public userService: UsuariosService) {
    }
 
   ngOnInit(): void {
@@ -28,14 +28,14 @@ export class UsersComponent implements OnInit {
   addUser(form: NgForm){
     
       if(form.value._id){
-        this.userService.putUser(form.value).subscribe(res=>{
+        this.userService.putUsers(form.value).subscribe(res=>{
           this.resetForm(form);
           M.toast({html: 'Usuario editado'});
           this.getUsers();
         });
       }else{
         delete form.value._id;
-        this.userService.postUser(form.value).subscribe(res => {
+        this.userService.postUsers(form.value).subscribe(res => {
           this.resetForm(form);
           M.toast({html: 'Usuario agregado'});
           this.getUsers();
@@ -101,7 +101,7 @@ export class UsersComponent implements OnInit {
 
     deleteUser(_id: string){
       if(confirm('desea borrar este usuario?')){
-        this.userService.deleteUser(_id).subscribe(res=>{
+        this.userService.deleteUsers(_id).subscribe(res=>{
           this.getUsers();
           M.toast({html: 'usuario eliminado'});
         });
